@@ -56,7 +56,7 @@ public class UserDAO implements DAO<User, String> {
             statement.setString(1, login);
             final ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                result.setId(Integer.parseInt(rs.getString("id")));
+                result.setId(rs.getInt("id"));
                 result.setLogin(login);
                 result.setPassword(rs.getString("password"));
                 result.setRole(new User.Role(rs.getInt("rol_id"), rs.getString("role")));
