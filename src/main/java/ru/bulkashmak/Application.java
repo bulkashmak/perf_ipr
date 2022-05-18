@@ -2,8 +2,9 @@ package ru.bulkashmak;
 
 import ru.bulkashmak.jdbc.UserDAO;
 
-import java.sql.SQLException;
 import java.util.Arrays;
+
+import static ru.bulkashmak.Util.Util.generateRandomString;
 
 public class Application {
 
@@ -11,11 +12,11 @@ public class Application {
 
         PostgresQueries queries = new PostgresQueries();
 
-        queries.select("*", "users");
-        queries.insert("users",
+        System.out.println(queries.select("*"));
+        queries.insert(
                 Arrays.asList("login", "password", "role"),
-                Arrays.asList("'alex'", "'1234'", "2"));
-        queries.select("*", "users");
+                Arrays.asList(String.format("'%s'", generateRandomString(10)), "'1234'", "2"));
+        System.out.println(queries.select("*"));
 
         queries.closeConnection();
 

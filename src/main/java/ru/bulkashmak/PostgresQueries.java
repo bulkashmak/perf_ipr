@@ -4,11 +4,11 @@ import com.sun.istack.NotNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostgresQueries {
 
@@ -29,37 +29,42 @@ public class PostgresQueries {
         }
     }
 
-    public void select(String selectTable, String fromTable) {
+    public List<Map<String, String>> select(String toSelect) {
 
-        String query = String.format("SELECT %s FROM %s", selectTable, fromTable);
+        List<Map<String, String>> result = new ArrayList<>();
+
+        String query = String.format("SELECT %s FROM users", toSelect);
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
-//            statement.setInt(1, 1);
             final ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
-                Integer id = resultSet.getInt("id");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                int role = resultSet.getInt("role");
-
-                System.out.println(id + " | " + login + " | " + password + " | " + role);
+                Map<String, String> user = new HashMap<>();
+                user.put("id", resultSet.getString("id"));
+                user.put("login", resultSet.getString("login"));
+                user.put("password", resultSet.getString("password"));
+                user.put("role", resultSet.getString("role"));
+                result.add(user);
             }
         } catch (SQLException e) {
             LOGGER.error("Ошибка при отправке SELECT запроса", e);
         }
+
+        if (result.isEmpty()) {
+            result.add(Map.of("empty", "Запрос не вернул значений"));
+        }
+        return result;
     }
 
-    public void insert(String table, List<String> columns, List<String> values) {
+    public void insert(List<String> columns, List<String> values) {
 
-        String query = String.format("INSERT INTO %s (%s) VALUES(%s)",
-                table,
-                String.join(", ", columns),
-                String.join(", ", values));
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            final ResultSet resultSet = statement.executeQuery();
+        try {
+            Statement statement = connection.createStatement();
+            String query = String.format("INSERT INTO users (%s) VALUES(%s)",
+                    String.join(", ", columns),
+                    String.join(", ", values));
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             LOGGER.error("Ошибка при отправке INSERT запроса", e);
         }
