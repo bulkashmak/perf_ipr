@@ -39,7 +39,7 @@ public class PostgresQueries {
                 System.out.println(id + " | " + login + " | " + password + " | " + role);
             }
         } catch (SQLException e) {
-            LOGGER.error("Ошибка при отправке SELECT запроса\n" + e.getMessage());
+            LOGGER.error("Ошибка при отправке SELECT запроса", e);
         }
     }
 
@@ -53,7 +53,7 @@ public class PostgresQueries {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             final ResultSet resultSet = statement.executeQuery();
         } catch (SQLException e) {
-            LOGGER.error("Ошибка при отправке INSERT запроса\n" + e.getMessage());
+            LOGGER.error("Ошибка при отправке INSERT запроса", e);
         }
     }
 }

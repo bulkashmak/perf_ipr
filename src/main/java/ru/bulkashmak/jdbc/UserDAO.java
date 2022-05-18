@@ -37,7 +37,7 @@ public class UserDAO implements DAO<User, String> {
             statement.setInt(3,user.getRole().getId());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
-            LOGGER.error("Ошибка при создании пользователя\n" + e.getMessage());
+            LOGGER.error("Ошибка при создании пользователя", e);
         }
         return result;
     }
@@ -60,7 +60,7 @@ public class UserDAO implements DAO<User, String> {
                 result.setRole(new User.Role(rs.getInt("rol_id"), rs.getString("role")));
             }
         } catch (SQLException e) {
-            LOGGER.error("Ошибка при получении пользователя\n" + e.getMessage());
+            LOGGER.error("Ошибка при получении пользователя", e);
         }
         return result;
     }
@@ -79,7 +79,7 @@ public class UserDAO implements DAO<User, String> {
             statement.setInt(2, user.getId());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
-            LOGGER.error("Ошибка при обновлении пользователя\n" + e.getMessage());
+            LOGGER.error("Ошибка при обновлении пользователя", e);
         }
         return result;
     }
@@ -97,7 +97,7 @@ public class UserDAO implements DAO<User, String> {
             statement.setInt(1, userId);
             result = statement.executeQuery().next();
         } catch (SQLException e) {
-            LOGGER.error("Ошибка при удалении пользователя\n" + e.getMessage());
+            LOGGER.error("Ошибка при удалении пользователя", e);
         }
         return result;
     }
