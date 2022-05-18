@@ -40,12 +40,6 @@ public class PostgresQueries {
             }
         } catch (SQLException e) {
             LOGGER.error("Ошибка при отправке SELECT запроса\n" + e.getMessage());
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Ошибка при отключении от БД\n" + e.getMessage());
-            }
         }
     }
 
@@ -60,12 +54,6 @@ public class PostgresQueries {
             final ResultSet resultSet = statement.executeQuery();
         } catch (SQLException e) {
             LOGGER.error("Ошибка при отправке INSERT запроса\n" + e.getMessage());
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Ошибка при отключении от БД\n" + e.getMessage());
-            }
         }
     }
 }
