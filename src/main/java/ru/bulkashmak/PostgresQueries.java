@@ -42,7 +42,7 @@ public class PostgresQueries {
                 Integer id = resultSet.getInt("id");
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
-                Integer role = resultSet.getInt("role");
+                int role = resultSet.getInt("role");
 
                 System.out.println(id + " | " + login + " | " + password + " | " + role);
             }
