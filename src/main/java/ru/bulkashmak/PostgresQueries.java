@@ -21,6 +21,14 @@ public class PostgresQueries {
         this.connection = PostgresUtil.connectToDb();
     }
 
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            LOGGER.error("Ошибка при отключении от БД", e);
+        }
+    }
+
     public void select(String selectTable, String fromTable) {
 
         String query = String.format("SELECT %s FROM %s", selectTable, fromTable);

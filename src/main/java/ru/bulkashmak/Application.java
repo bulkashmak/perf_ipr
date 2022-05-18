@@ -10,11 +10,6 @@ import java.util.Arrays;
 public class Application {
 
     public static void main(String[] args) throws SQLException {
-        final String dbUser = "postgres";
-        final String dbPassword = "1234";
-        final String dbUrl = "jdbc:postgresql://localhost:5432/ipr_db";
-
-        Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
 
         PostgresQueries queries = new PostgresQueries();
 
@@ -24,11 +19,13 @@ public class Application {
                 Arrays.asList("'alex'", "'1234'", "2"));
         queries.select("*", "users");
 
+        queries.closeConnection();
+
         // DAO
         UserDAO daoQueries = new UserDAO();
 
         System.out.println(daoQueries.read("bulkashmak"));
 
-        connection.close();
+        daoQueries.closeConnection();
     }
 }

@@ -22,6 +22,14 @@ public class UserDAO implements DAO<User, String> {
         this.connection = PostgresUtil.connectToDb();
     }
 
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            LOGGER.error("Ошибка при отключении от БД", e);
+        }
+    }
+
     /**
      * Создание пользователя в БД
      *

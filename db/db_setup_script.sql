@@ -18,5 +18,5 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (role) references roles (id)
 );
 
-INSERT INTO users (login, password, role) VALUES ('nagibator', '123', 1);
+INSERT INTO users (login, password, role) VALUES ('zxc', '123', 1);
 INSERT INTO users (login, password, role) VALUES ('bulkashmak', '123', 2);
