@@ -44,13 +44,11 @@ public class UserDAO implements DAO<User, String> {
 
     /**
      * Найти пользователя по логину
-     *
-     * @return Если пользователь не найден, возвращает пользователя с Id = -1
      */
     @Override
     public User read(@NotNull final String login) {
         final User result = new User();
-        result.setId(-1);
+        result.setLogin("Пользователь не найден");
 
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.GET.QUERY)) {
             statement.setString(1, login);
@@ -92,13 +90,11 @@ public class UserDAO implements DAO<User, String> {
      * @return True если пользователь был удален. False если пользователя не существует
      */
     @Override
-    public boolean delete(@NotNull final User user) {
+    public boolean delete(@NotNull Integer userId) {
         boolean result = false;
 
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.DELETE.QUERY)) {
-            statement.setInt(1, user.getId());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getPassword());
+            statement.setInt(1, userId);
             result = statement.executeQuery().next();
         } catch (SQLException e) {
             LOGGER.error("Ошибка при удалении пользователя\n" + e.getMessage());
@@ -112,7 +108,7 @@ public class UserDAO implements DAO<User, String> {
     enum SQLUser {
         GET("SELECT u.id, u.login, u.password, r.id AS rol_id, r.role FROM users AS u LEFT JOIN roles AS r ON u.role = r.id WHERE u.login = (?)"),
         INSERT("INSERT INTO users (login, password, role) VALUES ((?), (?), (?)) RETURNING id"),
-        DELETE("DELETE FROM users WHERE id = (?) AND login = (?) AND password = (?) RETURNING id"),
+        DELETE("DELETE FROM users WHERE id = (?) RETURNING id"),
         UPDATE("UPDATE users SET password = (?) WHERE id = (?) RETURNING id");
 
         String QUERY;
