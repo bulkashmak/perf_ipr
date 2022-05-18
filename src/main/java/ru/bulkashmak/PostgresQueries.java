@@ -57,7 +57,7 @@ public class PostgresQueries {
         return result;
     }
 
-    public void insert(List<String> columns, List<String> values) {
+    public Boolean insert(List<String> columns, List<String> values) {
 
         try {
             Statement statement = connection.createStatement();
@@ -67,6 +67,9 @@ public class PostgresQueries {
             statement.executeUpdate(query);
         } catch (SQLException e) {
             LOGGER.error("Ошибка при отправке INSERT запроса", e);
+            return false;
         }
+
+        return true;
     }
 }
