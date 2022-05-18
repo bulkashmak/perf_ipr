@@ -106,10 +106,10 @@ public class UserDAO implements DAO<User, String> {
      * SQL запросы
      */
     enum SQLUser {
-        GET("SELECT u.id, u.login, u.password, r.id AS rol_id, r.role FROM users AS u LEFT JOIN roles AS r ON u.role = r.id WHERE u.login = (?)"),
-        INSERT("INSERT INTO users (login, password, role) VALUES ((?), (?), (?)) RETURNING id"),
-        DELETE("DELETE FROM users WHERE id = (?) RETURNING id"),
-        UPDATE("UPDATE users SET password = (?) WHERE id = (?) RETURNING id");
+        GET("SELECT u.id, u.login, u.password, r.id AS rol_id, r.role FROM users AS u LEFT JOIN roles AS r ON u.role = r.id WHERE u.login = ?"),
+        INSERT("INSERT INTO users (login, password, role) VALUES (?, ?, ?) RETURNING id"),
+        DELETE("DELETE FROM users WHERE id = ? RETURNING id"),
+        UPDATE("UPDATE users SET password = ? WHERE id = ? RETURNING id");
 
         String QUERY;
 
