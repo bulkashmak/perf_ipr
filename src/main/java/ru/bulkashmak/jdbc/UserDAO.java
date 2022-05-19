@@ -15,7 +15,6 @@ public class UserDAO implements DAO<User, String> {
 
     private static final Logger LOGGER = LogManager.getLogger(UserDAO.class);
 
-    @NotNull
     private final Connection connection;
 
     public UserDAO() {
@@ -36,7 +35,7 @@ public class UserDAO implements DAO<User, String> {
      * @return False если пользователь уже существует
      */
     @Override
-    public boolean create(@NotNull final User user) {
+    public boolean create(User user) {
         boolean result = false;
 
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.INSERT.QUERY)) {
@@ -54,7 +53,7 @@ public class UserDAO implements DAO<User, String> {
      * Найти пользователя по логину
      */
     @Override
-    public User read(@NotNull final String login) {
+    public User read(String login) {
         final User result = new User();
         result.setLogin("Пользователь не найден");
 
@@ -79,7 +78,7 @@ public class UserDAO implements DAO<User, String> {
      * @return True при успехе. False при неудаче
      */
     @Override
-    public boolean update(@NotNull final User user) {
+    public boolean update(User user) {
         boolean result = false;
 
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.UPDATE.QUERY)) {
@@ -98,7 +97,7 @@ public class UserDAO implements DAO<User, String> {
      * @return True если пользователь был удален. False если пользователя не существует
      */
     @Override
-    public boolean delete(@NotNull Integer userId) {
+    public boolean delete(Integer userId) {
         boolean result = false;
 
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.DELETE.QUERY)) {
