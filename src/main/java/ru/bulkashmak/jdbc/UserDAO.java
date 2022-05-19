@@ -3,7 +3,7 @@ package ru.bulkashmak.jdbc;
 import com.sun.istack.NotNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.bulkashmak.PostgresUtil;
+import ru.bulkashmak.Util.PostgresUtil;
 import ru.bulkashmak.models.User;
 
 import java.sql.Connection;
