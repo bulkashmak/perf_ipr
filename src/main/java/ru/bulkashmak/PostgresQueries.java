@@ -64,8 +64,8 @@ public class PostgresQueries {
                 "INSERT INTO users (login, password, role) VALUES(?, ?, ?)")) {
             statement.setString(1, values.get("login"));
             statement.setString(2, values.get("password"));
-            statement.setString(3, values.get("role"));
-            statement.executeQuery();
+            statement.setInt(3, Integer.parseInt(values.get("role")));
+            statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Ошибка при отправке INSERT запроса", e);
             return false;

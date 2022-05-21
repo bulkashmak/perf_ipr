@@ -20,14 +20,12 @@ public class PostgresUtil {
         try {
             Class.forName("org.postgresql.Driver");
 
-            credentials
-                    .load(PostgresUtil.class
-                            .getResourceAsStream("/db_credentials.properties"));
+            credentials.load(PostgresUtil.class.getResourceAsStream("/db_credentials.properties"));
 
             return DriverManager.getConnection(
+                    credentials.getProperty("url"),
                     credentials.getProperty("user"),
-                    credentials.getProperty("password"),
-                    credentials.getProperty("url"));
+                    credentials.getProperty("password"));
         } catch (IOException | SQLException | ClassNotFoundException e) {
             LOGGER.error("Не удалось подключиться к базе данных. Убедитесь в том, что сервер " +
                     "базы данных активен и проверьте корректность переданных в метод параметров", e);
