@@ -58,14 +58,14 @@ public class PostgresQueries {
         return result;
     }
 
-    public Boolean insert(List<String> columns, List<String> values) {
+    public Boolean insert(Map<String, String> values) {
 
-        try {
-            Statement statement = connection.createStatement();
-            String query = String.format("INSERT INTO users (%s) VALUES(%s)",
-                    String.join(", ", columns),
-                    String.join(", ", values));
-            statement.executeUpdate(query);
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO users (login, password, role) VALUES(?, ?, ?)")) {
+            statement.setString(1, values.get("login"));
+            statement.setString(2, values.get("password"));
+            statement.setString(3, values.get("role"));
+            statement.executeQuery();
         } catch (SQLException e) {
             LOGGER.error("Ошибка при отправке INSERT запроса", e);
             return false;

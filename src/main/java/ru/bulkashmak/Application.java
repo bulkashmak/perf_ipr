@@ -3,6 +3,7 @@ package ru.bulkashmak;
 import ru.bulkashmak.jdbc.UserDAO;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import static ru.bulkashmak.Util.Util.generateRandomString;
 
@@ -13,9 +14,10 @@ public class Application {
         PostgresQueries queries = new PostgresQueries();
 
         System.out.println(queries.select("*"));
-        queries.insert(
-                Arrays.asList("login", "password", "role"),
-                Arrays.asList(String.format("'%s'", generateRandomString(10)), "'1234'", "2"));
+        queries.insert(Map.of(
+                "login", String.format("%s", generateRandomString(10)),
+                "password", "1234",
+                "role", "2"));
         System.out.println(queries.select("*"));
 
         queries.closeConnection();

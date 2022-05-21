@@ -1,6 +1,5 @@
 package ru.bulkashmak.jdbc;
 
-import com.sun.istack.NotNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.bulkashmak.Util.PostgresUtil;
@@ -41,7 +40,7 @@ public class UserDAO implements DAO<User, String> {
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.INSERT.QUERY)) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
-            statement.setInt(3,user.getRole().getId());
+            statement.setInt(3, user.getRole().getId());
             result = statement.executeQuery().next();
         } catch (SQLException e) {
             LOGGER.error("Ошибка при создании пользователя", e);

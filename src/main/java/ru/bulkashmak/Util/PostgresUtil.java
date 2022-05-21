@@ -20,7 +20,9 @@ public class PostgresUtil {
         try {
             Class.forName("org.postgresql.Driver");
 
-            credentials.load(PostgresUtil.class.getResourceAsStream("db_credentials.properties"));
+            credentials
+                    .load(PostgresUtil.class
+                            .getResourceAsStream("/db_credentials.properties"));
 
             return DriverManager.getConnection(
                     credentials.getProperty("user"),
